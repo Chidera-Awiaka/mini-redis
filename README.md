@@ -22,21 +22,26 @@ Supports concurrent clients over TCP, TTL expiration, LRU eviction, append-only 
 
 ## Architecture Overview
 
-Client  
-→ TCP Server  
-→ Command Parser  
-→ Store Engine  
+
+Client
+↓
+TCP Server
+↓
+Command Parser
+↓
+Store Engine
+
 
 ### Store Engine
 
-- In-memory hashmap for values
-- TTL map for expirations with background cleanup goroutine
-- LRU cache using hashmap + doubly linked list
+- In-memory hashmap for values  
+- TTL map for expirations with background cleanup goroutine  
+- LRU cache using hashmap + doubly linked list  
 
 ### Persistence
 
-- Append-only file (AOF)
-- Replay on startup to rebuild in-memory state
+- Append-only file (AOF)  
+- Replay on startup to rebuild in-memory state  
 
 ---
 
@@ -77,16 +82,14 @@ $reader.ReadLine()
 $client.Close()
 
 Supported Commands
-| Command                      | Description                |
-| ---------------------------- | -------------------------- |
-| `PING`                       | Returns `PONG`             |
-| `SET key value`              | Stores value               |
-| `SET key value EX <seconds>` | Stores value with TTL      |
-| `GET key`                    | Returns value or `NULL`    |
-| `DEL key`                    | Deletes key                |
-| `STATS`                      | Returns runtime statistics |
-| `QUIT`                       | Closes connection          |
-
+Command	Description
+PING	Returns PONG
+SET key value	Stores value
+SET key value EX <seconds>	Stores value with TTL
+GET key	Returns value or NULL
+DEL key	Deletes key
+STATS	Returns runtime statistics
+QUIT	Closes connection
 Benchmark
 
 Run server in one terminal:
